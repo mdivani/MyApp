@@ -1,0 +1,33 @@
+image: relativelimited/microservice-build-container
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script: # Modify the commands below to build your repository.
+          - npm install
+          - npm run prepush
+  branches:
+    master:
+      - step:
+          name: Build & Test
+          caches:
+          - node
+          script:
+          - npm install
+          - npm run prepush
+          artifacts:
+          - dist/**
+      - step:
+          name: Deploy to Test (iOS)
+          deployment: test
+          caches:
+          - node
+          script:
+          - export STAGE=test
+          - npm install -g expo-cli --unsafe-perm=true --allow-root
+          - node ./.pipelines/buildNumber.js
+          - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+          - npx expo build:ios --clear-push-cert --non-interactive --release-channel test
+          - ./.pipelines/deploy_ios.sh
