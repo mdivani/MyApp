@@ -42,7 +42,7 @@ const App: () => React$Node = () => {
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Huge step</Text>
               <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> Run it on IOS & Android
+                Edit <Text style={styles.highlight}>App.tsx</Text> Run it on IOS and Android
               </Text>
             </View>
             <View style={styles.sectionContainer}>
